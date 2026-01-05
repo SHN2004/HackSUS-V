@@ -44,7 +44,7 @@ const HeroSection = () => {
           <img
             src="/images/EditionV-Ribbon.png"
             alt="Edition V"
-            className="mx-auto w-48 sm:w-56 md:w-64 lg:w-72"
+            className="mx-auto w-56 sm:w-64 md:w-72 lg:w-80"
           />
         </div>
 
@@ -53,7 +53,7 @@ const HeroSection = () => {
           className="font-body text-xl md:text-2xl text-muted-foreground mb-2 animate-fade-in"
           style={{ animationDelay: "0.6s" }}
         >
-          India's First Multi Tarck AI-Workflow Hackathon
+          India's First AI-Workflow Hackathon
         </p>
 
         {/* Date */}
@@ -61,7 +61,6 @@ const HeroSection = () => {
           className="font-mono text-lg text-primary mb-12 animate-fade-in"
           style={{ animationDelay: "0.8s" }}
         >
-          MARCH 6-7, 2026
           MARCH 6-8, 2026
         </p>
 
@@ -78,7 +77,6 @@ const HeroSection = () => {
           style={{ animationDelay: "1.2s" }}
         >
           {[
-            { value: "42", label: "HOURS" },
             { value: "42", label: "HOURS" },
             { value: "500+", label: "HACKERS" },
             { value: "₹5 Lakhs+", label: "IN PRIZES" },

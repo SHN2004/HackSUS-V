@@ -39,8 +39,8 @@ const AboutSection = () => {
             <div className="flex flex-wrap gap-8 pt-4">
               {[
                 { value: "5th", label: "Edition" },
-                { value: "150+", label: "Projects Built" },
-                { value: "25+", label: "Workshops" },
+                { value: "100+", label: "Projects Built" },
+                { value: "15+", label: "Workshops" },
               ].map((stat, i) => (
                 <div key={i} className="border-l-2 border-primary pl-4">
                   <div className="font-display text-3xl text-primary">{stat.value}</div>
