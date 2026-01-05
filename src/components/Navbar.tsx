@@ -17,15 +17,14 @@ const Navbar = () => {
     { href: "#about", label: "About" },
     { href: "#details", label: "Details" },
     { href: "#tracks", label: "Tracks" },
-    { href: "#schedule", label: "Schedule" },
-    { href: "#faq", label: "FAQ" },
+    // { href: "#schedule", label: "Schedule" },
+    // { href: "#faq", label: "FAQ" },
   ];
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/95 backdrop-blur-md border-b border-border" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/95 backdrop-blur-md border-b border-border" : "bg-transparent"
+        }`}
     >
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
@@ -48,9 +47,9 @@ const Navbar = () => {
             ))}
             <a
               href="#register"
-              className="bg-primary text-primary-foreground px-6 py-2 font-display tracking-wider text-sm hover:bg-primary/90 transition-colors"
+              className="bg-primary text-primary-foreground px-6 py-2 font-display tracking-wider text-sm hover:bg-primary/90 transition-colors rounded-xl"
             >
-              REGISTER
+              PRE-REGISTER
             </a>
           </div>
 
@@ -80,7 +79,7 @@ const Navbar = () => {
               ))}
               <a
                 href="#register"
-                className="mx-6 mt-4 bg-primary text-primary-foreground px-6 py-3 font-display tracking-wider text-center"
+                className="mx-6 mt-4 bg-primary text-primary-foreground px-6 py-3 font-display tracking-wider text-center rounded-lg"
                 onClick={() => setIsMobileOpen(false)}
               >
                 REGISTER
