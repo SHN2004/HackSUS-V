@@ -20,9 +20,9 @@ const Footer = () => {
               <p className="font-mono text-sm text-muted-foreground">Email: abrahammadamana@gmail.com</p>
             </div>
             <div>
-              <p className="font-mono text-foreground mb-1">Fathima Moonam Kandathil</p>
-              <p className="font-mono text-sm text-muted-foreground">Phone: +91 80895 98331</p>
-              <p className="font-mono text-sm text-muted-foreground">Email: fathimarasheed004@gmail.com</p>
+              <p className="font-mono text-foreground mb-1">Aaron Thomas</p>
+              <p className="font-mono text-sm text-muted-foreground">Phone: +91 84480 59331</p>
+              <p className="font-mono text-sm text-muted-foreground">Email: aaronthomas25700@gmail.com</p>
             </div>
           </div>
 
