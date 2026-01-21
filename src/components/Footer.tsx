@@ -27,7 +27,7 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-wrap [@media(min-width:1115px)]:flex-nowrap justify-center items-center gap-6 max-w-[340px] [@media(min-width:1115px)]:max-w-none mx-auto">
-            <img className="w-40" src="/images/rset_iic.PNG" alt="RSET IIC" />
+            <img className="w-40" src="/images/iic_logo.png" alt="RSET IIC" />
             <img className="w-40" src="/images/silver_jubilee_rset.png" alt="Silver Jubilee RSET" />
             <img className="w-40" src="/images/rset_iedc.PNG" alt="RSET IEDC" />
           </div>

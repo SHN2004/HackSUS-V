@@ -52,12 +52,6 @@ const HeroSection = () => {
         ))}
       </div>
 
-      {/* Geometric corner decorations */}
-      <div className="absolute top-0 left-0 w-32 h-32 border-l-2 border-t-2 border-primary/30" />
-      <div className="absolute top-0 right-0 w-32 h-32 border-r-2 border-t-2 border-primary/30" />
-      <div className="absolute bottom-0 left-0 w-32 h-32 border-l-2 border-b-2 border-primary/30" />
-      <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-primary/30" />
-
       <div className="container relative z-10 px-6 text-center">
         {/* Main title */}
         <h1
