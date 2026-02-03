@@ -1,4 +1,5 @@
 import { FolderCode, Plug2, CircuitBoard, Hammer, Clapperboard, Music } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const tracks = [
   {
@@ -6,36 +7,42 @@ const tracks = [
     title: "AstraX (Software)",
     description: "Integrate AI into software workflows to make them more efficient",
     color: "from-primary to-accent",
+    path: "/astraX",
   },
   {
     icon: CircuitBoard,
     title: "CarbonX (Electronics)",
     description: "Build AI-enabled electronic systems that rethink and optimize everyday workflows.",
     color: "from-accent to-neon",
+    path: "/carbonx",
   },
   {
     icon: Plug2,
     title: "SyncConX (EEE & Instrumentation)",
     description: "Create data-driven electrical and instrumentation systems for smarter, more efficient workflows.",
     color: "from-primary to-crimson",
+    path: "/syncconx",
   },
   {
     icon: Hammer,
     title: "HeliX (Civil)",
     description: "Integrate intelligent tools into civil and mechanical engineering to build smarter, more efficient workflows.",
     color: "from-accent to-primary",
+    path: "/helix",
   },
   {
     icon: Clapperboard,
     title: "ScreenX (Film)",
     description: "Create innovative film solutions that streamline, augment, and elevate production workflows.",
     color: "from-primary to-accent",
+    path: "/screenx",
   },
   {
     icon: Music,
     title: "UnmuteX (Music)",
     description: "Create innovative music solutions that streamline, augment, and elevate production workflows.",
     color: "from-primary to-accent",
+    path: "/unmutex",
   },
 ];
 
@@ -60,8 +67,9 @@ const TracksSection = () => {
         {/* Tracks grid */}
         <div className="grid grid-cols-1 [@media(min-width:1016px)]:grid-cols-3 lg:grid-cols-3 gap-6">
           {tracks.map((track, i) => (
-            <div
+            <Link
               key={i}
+              to={track.path}
               className="group relative bg-card border border-border p-8 hover-glow transition-all duration-500"
             >
               {/* Gradient overlay on hover */}
@@ -93,11 +101,11 @@ const TracksSection = () => {
               <div className="absolute top-4 right-4 font-mono text-xs text-muted-foreground opacity-50">
                 TRACK_{String(i + 1).padStart(2, "0")}
               </div>
-            </div>
+            </Link>
           ))}
         </div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 };
 
