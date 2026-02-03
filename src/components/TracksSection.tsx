@@ -1,4 +1,5 @@
 import { FolderCode, Plug2, CircuitBoard, Hammer, Clapperboard, Music } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const tracks = [
   {
@@ -12,6 +13,7 @@ const tracks = [
     title: "CarbonX (Electronics)",
     description: "Build AI-enabled electronic systems that rethink and optimize everyday workflows.",
     color: "from-accent to-neon",
+    href: "/carbonx",
   },
   {
     icon: Plug2,
@@ -59,42 +61,61 @@ const TracksSection = () => {
 
         {/* Tracks grid */}
         <div className="grid grid-cols-1 [@media(min-width:1016px)]:grid-cols-3 lg:grid-cols-3 gap-6">
-          {tracks.map((track, i) => (
-            <div
-              key={i}
-              className="group relative bg-card border border-border p-8 hover-glow transition-all duration-500"
-            >
-              {/* Gradient overlay on hover */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${track.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+          {tracks.map((track, i) => {
+            const body = (
+              <>
+                {/* Gradient overlay on hover */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${track.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
+                />
 
-              {/* Content */}
-              <div className="relative z-10">
-                {/* Icon with glow */}
-                <div className="w-16 h-16 flex items-center justify-center mb-6 relative">
-                  <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <track.icon className="w-8 h-8 text-primary relative z-10" />
+                {/* Content */}
+                <div className="relative z-10">
+                  {/* Icon with glow */}
+                  <div className="w-16 h-16 flex items-center justify-center mb-6 relative">
+                    <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <track.icon className="w-8 h-8 text-primary relative z-10" />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-display text-2xl text-foreground mb-4 group-hover:text-primary transition-colors">
+                    {track.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {track.description}
+                  </p>
+
+                  {/* Bottom accent line */}
+                  <div className="mt-6 h-0.5 bg-border group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-transparent transition-all duration-500" />
                 </div>
 
-                {/* Title */}
-                <h3 className="font-display text-2xl text-foreground mb-4 group-hover:text-primary transition-colors">
-                  {track.title}
-                </h3>
+                {/* Corner decoration */}
+                <div className="absolute top-4 right-4 font-mono text-xs text-muted-foreground opacity-50">
+                  TRACK_{String(i + 1).padStart(2, "0")}
+                </div>
+              </>
+            );
 
-                {/* Description */}
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {track.description}
-                </p>
-
-                {/* Bottom accent line */}
-                <div className="mt-6 h-0.5 bg-border group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-transparent transition-all duration-500" />
+            return track.href ? (
+              <Link
+                key={i}
+                to={track.href}
+                className="group relative bg-card border border-border p-8 hover-glow transition-all duration-500 cursor-pointer"
+                aria-label={`Open ${track.title} page`}
+              >
+                {body}
+              </Link>
+            ) : (
+              <div
+                key={i}
+                className="group relative bg-card border border-border p-8 hover-glow transition-all duration-500"
+              >
+                {body}
               </div>
-
-              {/* Corner decoration */}
-              <div className="absolute top-4 right-4 font-mono text-xs text-muted-foreground opacity-50">
-                TRACK_{String(i + 1).padStart(2, "0")}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
