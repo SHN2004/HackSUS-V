@@ -515,6 +515,10 @@
   .landing-actions {
     display: none;
   }
+
+  .carbonx-actions {
+    display: flex;
+  }
 }
 
 .landing-bg-particles canvas {

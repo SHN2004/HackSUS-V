@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Menu } from "lucide-react";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
@@ -10,6 +10,7 @@ import Magnet from "@/components/Magnet";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const carbonX = {
   eventName: "CARBONX",
@@ -159,6 +160,7 @@ function CarbonXNavbar({
 }) {
   const linksWrapRef = useRef<HTMLDivElement | null>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [indicator, setIndicator] = useState<{ left: number; width: number; opacity: number }>({
     left: 0,
     width: 0,
@@ -197,6 +199,15 @@ function CarbonXNavbar({
       ro.disconnect();
     };
   }, [syncIndicator]);
+
+  const navigateFromSheet = useCallback(
+    (id: string) => {
+      setMobileOpen(false);
+      // Let Radix close animation + scroll locking settle before measuring scroll offset.
+      window.setTimeout(() => onNavigate(id), 180);
+    },
+    [onNavigate],
+  );
 
   return (
     <header className="landing-header w-full">
@@ -253,10 +264,81 @@ function CarbonXNavbar({
         <div className="flex items-center gap-3">
           <Button
             onClick={() => onNavigate("problems")}
-            className="landing-nav-cta rounded-xl px-6 h-9 shadow-[0_10px_30px_hsl(var(--primary)/0.18)]"
+            className="landing-nav-cta hidden md:inline-flex rounded-xl px-6 h-9 shadow-[0_10px_30px_hsl(var(--primary)/0.18)]"
           >
             REGISTER NOW <ArrowRight className="ml-1" />
           </Button>
+
+          <Button
+            onClick={() => onNavigate("problems")}
+            className="landing-nav-cta md:hidden inline-flex rounded-xl px-4 h-9 shadow-[0_10px_30px_hsl(var(--primary)/0.18)]"
+          >
+            REGISTER <ArrowRight className="ml-1" />
+          </Button>
+
+          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                className="md:hidden h-9 w-9 rounded-xl border-border/60 bg-background/10 text-foreground/90 hover:bg-background/15 hover:text-foreground"
+                aria-label="Open navigation menu"
+              >
+                <Menu className="h-4 w-4" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="bg-black/95 border-border/60 backdrop-blur-md px-6"
+            >
+              <div className="mt-10 flex flex-col gap-8">
+                <div className="flex items-center justify-between">
+                  <div className="font-mokoto tracking-[0.32em] text-[15px] text-foreground/90">
+                    CARBONX
+                  </div>
+                </div>
+
+                <nav className="flex flex-col gap-2">
+                  {items.map((it) => (
+                    <button
+                      key={it.id}
+                      type="button"
+                      onClick={() => {
+                        navigateFromSheet(it.id);
+                      }}
+                      className={cn(
+                        "group flex items-center justify-between rounded-xl px-3 py-3 text-left transition-colors",
+                        activeId === it.id
+                          ? "bg-primary/10 text-foreground"
+                          : "bg-background/0 text-muted-foreground hover:bg-background/10 hover:text-foreground",
+                      )}
+                    >
+                      <span className="font-mono text-xs tracking-[0.34em] uppercase">
+                        {it.label}
+                      </span>
+                      <span
+                        className={cn(
+                          "h-2 w-2 rounded-full transition-opacity",
+                          activeId === it.id ? "bg-primary opacity-100" : "bg-primary/70 opacity-0 group-hover:opacity-70",
+                        )}
+                        aria-hidden="true"
+                      />
+                    </button>
+                  ))}
+                </nav>
+
+                <div className="pt-2">
+                  <Button
+                    onClick={() => {
+                      navigateFromSheet("problems");
+                    }}
+                    className="landing-nav-cta w-full rounded-xl h-11 shadow-[0_16px_46px_hsl(var(--primary)/0.18)]"
+                  >
+                    REGISTER NOW <ArrowRight className="ml-1" />
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
@@ -275,15 +357,23 @@ const CarbonX = () => {
   const getNavOffset = useCallback(() => {
     const header = document.querySelector(".landing-header") as HTMLElement | null;
     const headerHeight = header?.getBoundingClientRect().height ?? 0;
-    return Math.max(0, Math.round(headerHeight + 12));
+    return Math.max(0, Math.round(headerHeight + 8));
   }, []);
   const scrollToSection = useCallback((id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - getNavOffset();
-    // Keep the landing view stable on reload by not persisting section hashes.
-    window.history.replaceState(null, "", window.location.pathname + window.location.search);
-    window.scrollTo({ top, behavior: "smooth" });
+    window.requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const computed = window.getComputedStyle(el);
+      const paddingTop = Number.parseFloat(computed.paddingTop || "0") || 0;
+      const top =
+        el.getBoundingClientRect().top +
+        window.scrollY -
+        getNavOffset() +
+        paddingTop;
+      // Keep the landing view stable on reload by not persisting section hashes.
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    });
   }, [getNavOffset]);
 
   useEffect(() => {
@@ -407,7 +497,7 @@ const CarbonX = () => {
                 India team up to build practical, high-impact solutions.
               </p>
 
-              <div className="landing-actions flex-col sm:flex-row items-center">
+              <div className="landing-actions carbonx-actions flex-col sm:flex-row items-center">
                 <Magnet
                   disabled={magnetDisabled}
                   padding={90}
