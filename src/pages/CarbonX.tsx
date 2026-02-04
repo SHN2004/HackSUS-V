@@ -16,7 +16,7 @@ const carbonX = {
   eventName: "CARBONX",
   year: "2026",
   tagline: "INNOVATION BEYOND BOUNDARIES",
-  prizeAmount: "₹1,00,000",
+  prizeAmount: "₹2,00,000",
   prizeCaption: "PRIZE POOL",
   description:
     "A 42 hour national hackathon where developers, innovators, and students from across India team up to build practical, high-impact solutions. The event brings together industry experts, mentors, and tech enthusiasts in a round-the-clock marathon of problem-solving, prototyping, and pure chaos-powered innovation.",
@@ -617,41 +617,49 @@ const CarbonX = () => {
               </GlassCard>
             </motion.div>
 
-            <div className="lg:col-span-5 grid grid-cols-1 gap-5 md:gap-8">
-              {[
-                {
-                  label: "OWNERSHIP",
-                  title: "Department-led, technically owned.",
-                  body:
-                    "Curated and owned by the Department of Electronics and Communication Engineering, with a long-term plan to evolve as a standalone annual hackathon.",
-                },
-                {
-                  label: "COLLABORATION",
-                  title: "Built with CDAC.",
-                  body:
-                    "Continuing collaboration with CDAC to reinforce indigenous technology and a deep-tech engineering focus.",
-                },
-              ].map((b) => (
-                <motion.div
-                  key={b.title}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px 0px -20% 0px" }}
-                  transition={{ duration: 0.55, ease: "easeOut" }}
-                >
-                  <GlassCard className="p-7 md:p-8">
-                    <div className="font-mono text-[10px] tracking-[0.52em] text-muted-foreground">
-                      {b.label}
-                    </div>
-                    <div className="mt-2 font-display text-xl tracking-wide">
-                      {b.title}
-                    </div>
-                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                      {b.body}
-                    </p>
-                  </GlassCard>
-                </motion.div>
-              ))}
+            <div className="lg:col-span-5">
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px 0px -20% 0px" }}
+                transition={{ duration: 0.55, ease: "easeOut" }}
+                className="h-full"
+              >
+                <GlassCard className="p-7 md:p-8 h-full">
+                  <div className="font-mono text-[10px] tracking-[0.52em] text-muted-foreground">
+                    COLLABORATION
+                  </div>
+                  <div className="mt-2 font-display text-xl md:text-2xl tracking-wide">
+                    Built with <span className="text-primary">CDAC</span>.
+                  </div>
+                  <p className="mt-3 text-sm md:text-base text-muted-foreground leading-relaxed">
+                    Continuing collaboration with CDAC to reinforce indigenous technology and a
+                    deep-tech engineering focus.
+                  </p>
+
+                  <div className="mt-6 h-px w-full bg-border/60" />
+                  <div className="mt-5 grid grid-cols-2 gap-3">
+                    {[
+                      { label: "FOCUS", value: "Indigenous tech" },
+                      { label: "MODE", value: "Hardware-first" },
+                      { label: "OUTPUT", value: "Working prototypes" },
+                      { label: "LEARNING", value: "Deep systems" },
+                    ].map((m) => (
+                      <div
+                        key={m.label}
+                        className="rounded-none card-beveled border border-border/70 bg-background/5 px-4 py-3"
+                      >
+                        <div className="font-mono text-[10px] tracking-[0.44em] text-muted-foreground">
+                          {m.label}
+                        </div>
+                        <div className="mt-2 font-display text-sm tracking-wide text-foreground/90">
+                          {m.value}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </GlassCard>
+              </motion.div>
             </div>
           </div>
           </div>
