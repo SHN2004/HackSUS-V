@@ -26,7 +26,7 @@ const ScreenX = () => {
                     <div className="mb-16 text-center">
                         <span className="font-mono text-sm text-primary tracking-[0.3em]">// TRACK 05</span>
                         <h1 className="font-display text-5xl md:text-6xl text-foreground mt-4">
-                            SCREENX <div className="text-primary">(Film)</div>
+                            SCREENX
                         </h1>
                         <p className="text-xl text-muted-foreground mt-6 max-w-2xl mx-auto text-center">
                             Create innovative film solutions that streamline, augment, and elevate production workflows
@@ -69,7 +69,7 @@ const ScreenX = () => {
                                     </ul>
                                 </section>
 
-                                {/* Judging Criteria */}
+                                {/* Judging Criteria
                                 <section className="bg-card border border-border p-8 rounded-xl">
                                     <h2 className="font-display text-2xl text-foreground mb-4">Judging Criteria</h2>
                                     <ul className="space-y-3 text-muted-foreground">
@@ -90,7 +90,7 @@ const ScreenX = () => {
                                             <span>User Experience (25%)</span>
                                         </li>
                                     </ul>
-                                </section>
+                                </section> */}
                             </div>
                         </div>
 
@@ -105,7 +105,7 @@ const ScreenX = () => {
                                     </div>
                                     <div>
                                         <p className="text-primary font-semibold mb-1">Team Size</p>
-                                        <p>1-5 members</p>
+                                        <p>4-6 members</p>
                                     </div>
                                     <div>
                                         <p className="text-primary font-semibold mb-1">Duration</p>

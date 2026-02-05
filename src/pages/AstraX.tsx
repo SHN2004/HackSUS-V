@@ -26,7 +26,7 @@ const AstraX = () => {
                     <div className="mb-16 text-center">
                         <span className="font-mono text-sm text-primary tracking-[0.3em]">// TRACK 01</span>
                         <h1 className="font-display text-5xl md:text-6xl text-foreground mt-4">
-                            ASTRAX <div className="text-primary">(Software)</div>
+                            ASTRAX
                         </h1>
                         <p className="text-xl text-muted-foreground mt-6 max-w-2xl mx-auto text-center">
                             Integrate AI into software workflows to make them more efficient
@@ -69,7 +69,7 @@ const AstraX = () => {
                                     </ul>
                                 </section>
 
-                                {/* Judging Criteria */}
+                                {/* Judging Criteria
                                 <section className="bg-card border border-border p-8 rounded-xl">
                                     <h2 className="font-display text-2xl text-foreground mb-4">Judging Criteria</h2>
                                     <ul className="space-y-3 text-muted-foreground">
@@ -90,7 +90,7 @@ const AstraX = () => {
                                             <span>Presentation Quality (25%)</span>
                                         </li>
                                     </ul>
-                                </section>
+                                </section> */}
                             </div>
                         </div>
 
@@ -105,7 +105,7 @@ const AstraX = () => {
                                     </div>
                                     <div>
                                         <p className="text-primary font-semibold mb-1">Team Size</p>
-                                        <p>1-5 members</p>
+                                        <p>4-6 members</p>
                                     </div>
                                     <div>
                                         <p className="text-primary font-semibold mb-1">Duration</p>
