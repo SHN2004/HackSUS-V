@@ -7,6 +7,10 @@ import { cn } from "@/lib/utils";
 import ResponsiveParticles from "@/components/ResponsiveParticles";
 import DecryptedText from "@/components/DecryptedText";
 import Magnet from "@/components/Magnet";
+import ShinyText from "@/components/ShinyText";
+import SpotlightCard from "@/components/SpotlightCard";
+import TrueFocus from "@/components/TrueFocus";
+import { useParticleTuning } from "@/hooks/useParticlesQuality";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -230,10 +234,10 @@ function CarbonXNavbar({
         >
           <motion.div
             aria-hidden="true"
-            className="absolute -bottom-2 h-0.5 bg-primary shadow-[0_0_18px_hsl(var(--primary)/0.35)] will-change-[left,width]"
+            className="absolute -bottom-2 h-0.5 w-px origin-left bg-primary shadow-[0_0_18px_hsl(var(--primary)/0.35)] will-change-[transform]"
             animate={{
-              left: indicator.left,
-              width: indicator.width,
+              x: indicator.left,
+              scaleX: indicator.width,
               opacity: indicator.opacity,
             }}
             transition={{ type: "spring", stiffness: 520, damping: 42, mass: 0.25 }}
@@ -353,6 +357,7 @@ const CarbonX = () => {
   );
   const activeId = useActiveSection(sectionIds);
   const particleColors = useMemo(() => ["#ffffff"], []);
+  const particleTuning = useParticleTuning();
   const [magnetDisabled, setMagnetDisabled] = useState(true);
   const getNavOffset = useCallback(() => {
     const header = document.querySelector(".landing-header") as HTMLElement | null;
@@ -419,19 +424,20 @@ const CarbonX = () => {
           minWidth={768}
           className="landing-bg-particles absolute inset-0"
           particleColors={particleColors}
-          particleCount={240}
-          particleSpread={12}
-          speed={0.16}
-          particleBaseSize={170}
-          sizeRandomness={0.65}
+          particleCount={particleTuning.particleCount}
+          particleSpread={particleTuning.particleSpread}
+          speed={particleTuning.speed}
+          particleBaseSize={particleTuning.particleBaseSize}
+          sizeRandomness={particleTuning.sizeRandomness}
           moveParticlesOnHover={true}
           moveParticlesOnDeviceOrientation={true}
           deviceOrientationFactor={2.4}
-          particleHoverFactor={2.2}
+          particleHoverFactor={particleTuning.particleHoverFactor}
           hoverMode="window"
           alphaParticles={true}
           disableRotation={false}
-          pixelRatio={1}
+          pixelRatio={particleTuning.pixelRatio}
+          maxFps={particleTuning.maxFps}
         />
         <div className="absolute inset-0 bg-gradient-radial from-white/[0.05] via-transparent to-transparent" />
         <div
@@ -469,7 +475,17 @@ const CarbonX = () => {
               </p>
 
               <h1 className="landing-title">
-                <span className="landing-brand">{carbonX.eventName}</span>{" "}
+                <ShinyText
+                  text={carbonX.eventName}
+                  disabled={magnetDisabled}
+                  className="landing-brand"
+                  speed={2.6}
+                  delay={1.1}
+                  spread={118}
+                  color="hsl(var(--foreground) / 0.92)"
+                  shineColor="hsl(var(--primary))"
+                  yoyo={true}
+                />{" "}
                 <span className="landing-year">{carbonX.year}</span>
               </h1>
 
@@ -534,7 +550,10 @@ const CarbonX = () => {
                 transition={{ duration: 0.55, ease: "easeOut" }}
                 className="w-full"
               >
-                <div className="landing-stats mx-auto rounded-none card-beveled border border-border/70 bg-card/60 px-5 pb-5 md:px-6">
+                <SpotlightCard
+                  className="landing-stats mx-auto rounded-none card-beveled border border-border/70 bg-card/60 px-5 pb-5 md:px-6 p-0"
+                  spotlightColor={"rgba(255, 49, 46, 0.14)"}
+                >
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-0">
                     {carbonX.stats.map((s, idx) => (
                       <div
@@ -563,7 +582,7 @@ const CarbonX = () => {
 	                      </div>
 	                    ))}
 	                  </div>
-	                </div>
+	                </SpotlightCard>
 	              </motion.div>
             </motion.div>
           </div>
@@ -750,7 +769,14 @@ const CarbonX = () => {
             description="Pick the lane that matches your build — embedded systems, processors, or electronic design workflows."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
+          <TrueFocus
+            className="relative grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8"
+            itemClassName="h-full cursor-pointer"
+            blurAmount={2.2}
+            borderColor="hsl(var(--primary))"
+            glowColor="hsl(var(--primary) / 0.45)"
+            animationDuration={0.38}
+          >
             {[
               {
                 title: "VEGATHON (VEGA Processor)",
@@ -771,18 +797,30 @@ const CarbonX = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px 0px -20% 0px" }}
                 transition={{ duration: 0.55, ease: "easeOut" }}
+                className="h-full"
               >
                 <GlassCard className="p-7 md:p-8 h-full">
                   <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="font-display text-xl md:text-2xl tracking-wide">
-                        {t.title}
+                    <div className="truefocus-stack min-w-0">
+                      <div className="truefocus-sharp">
+                        <div className="font-display text-xl md:text-2xl tracking-wide">
+                          {t.title}
+                        </div>
+                        <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                          {t.description}
+                        </p>
                       </div>
-                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                        {t.description}
-                      </p>
+                      <div className="truefocus-blur" aria-hidden="true">
+                        <div className="font-display text-xl md:text-2xl tracking-wide">
+                          {t.title}
+                        </div>
+                        <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                          {t.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex flex-col items-end gap-2">
+
+                    <div className="flex flex-col items-end gap-2 shrink-0">
                       <span className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.34em] text-primary shadow-[0_0_0_1px_rgba(255,49,46,0.06),0_14px_40px_rgba(255,49,46,0.08)]">
                         TRACK <span className="text-foreground/90">{t.badge}</span>
                       </span>
@@ -790,10 +828,11 @@ const CarbonX = () => {
                   </div>
 
                   <div className="mt-6 h-px w-full bg-border/70" />
+                  <div className="truefocus-veil pointer-events-none absolute inset-0" aria-hidden="true" />
                 </GlassCard>
               </motion.div>
             ))}
-          </div>
+          </TrueFocus>
           </div>
         </section>
 

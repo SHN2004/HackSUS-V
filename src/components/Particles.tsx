@@ -19,6 +19,7 @@ interface ParticlesProps {
   cameraDistance?: number;
   disableRotation?: boolean;
   pixelRatio?: number;
+  maxFps?: number;
   className?: string;
 }
 
@@ -119,12 +120,14 @@ const Particles: React.FC<ParticlesProps> = ({
   cameraDistance = 20,
   disableRotation = false,
   pixelRatio = 1,
+  maxFps = 60,
   className
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   // Frame-driven smoothing: event updates targets; RAF lerps current towards target.
   const mouseTargetRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const containerRectRef = useRef<DOMRect | null>(null);
   const orientationRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const orientationTargetRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
@@ -147,6 +150,19 @@ const Particles: React.FC<ParticlesProps> = ({
     const camera = new Camera(gl, { fov: 15 });
     camera.position.set(0, 0, cameraDistance);
 
+    let rectRafId = 0;
+    const updateContainerRect = () => {
+      containerRectRef.current = container.getBoundingClientRect();
+    };
+
+    const scheduleRectUpdate = () => {
+      if (rectRafId) return;
+      rectRafId = requestAnimationFrame(() => {
+        rectRafId = 0;
+        updateContainerRect();
+      });
+    };
+
     const resize = () => {
       const width = container.clientWidth;
       const height = container.clientHeight;
@@ -154,10 +170,15 @@ const Particles: React.FC<ParticlesProps> = ({
       camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
     };
     window.addEventListener('resize', resize, false);
+    if (moveParticlesOnHover) {
+      window.addEventListener('scroll', scheduleRectUpdate, { passive: true });
+    }
     resize();
+    updateContainerRect();
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
+      const rect = containerRectRef.current ?? container.getBoundingClientRect();
+      containerRectRef.current = rect;
       const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
       mouseTargetRef.current = { x, y };
@@ -253,15 +274,27 @@ const Particles: React.FC<ParticlesProps> = ({
 
     const particles = new Mesh(gl, { mode: gl.POINTS, geometry, program });
 
-    let animationFrameId: number;
+    let animationFrameId = 0;
     let lastTime = performance.now();
     let elapsed = 0;
+    let frameAccumulator = 0;
+    const frameBudget = maxFps > 0 ? 1000 / maxFps : 0;
 
     const update = (t: number) => {
-      animationFrameId = requestAnimationFrame(update);
       const delta = t - lastTime;
       lastTime = t;
-      elapsed += delta * speed;
+      if (frameBudget > 0) {
+        frameAccumulator += delta;
+        if (frameAccumulator < frameBudget) {
+          animationFrameId = requestAnimationFrame(update);
+          return;
+        }
+      }
+
+      const step = frameBudget > 0 ? frameAccumulator : delta;
+      frameAccumulator = 0;
+
+      elapsed += step * speed;
 
       program.uniforms.uTime.value = elapsed * 0.001;
 
@@ -294,18 +327,44 @@ const Particles: React.FC<ParticlesProps> = ({
       }
 
       renderer.render({ scene: particles, camera });
+
+      animationFrameId = requestAnimationFrame(update);
     };
 
-    animationFrameId = requestAnimationFrame(update);
+    const start = () => {
+      if (animationFrameId) return;
+      lastTime = performance.now();
+      frameAccumulator = 0;
+      animationFrameId = requestAnimationFrame(update);
+    };
+
+    const stop = () => {
+      if (!animationFrameId) return;
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = 0;
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) stop();
+      else start();
+    };
+
+    document.addEventListener("visibilitychange", onVisibility, { passive: true });
+    start();
 
     return () => {
       window.removeEventListener('resize', resize);
+      if (moveParticlesOnHover) {
+        window.removeEventListener('scroll', scheduleRectUpdate);
+      }
+      if (rectRafId) cancelAnimationFrame(rectRafId);
+      document.removeEventListener("visibilitychange", onVisibility);
       if (moveParticlesOnHover) {
         const target: EventTarget = hoverMode === "window" ? window : container;
         target.removeEventListener("mousemove", handleMouseMove as EventListener);
       }
       window.removeEventListener("deviceorientation", handleDeviceOrientation, true);
-      cancelAnimationFrame(animationFrameId);
+      stop();
       if (container.contains(gl.canvas)) {
         container.removeChild(gl.canvas);
       }
@@ -325,7 +384,8 @@ const Particles: React.FC<ParticlesProps> = ({
     sizeRandomness,
     cameraDistance,
     disableRotation,
-    pixelRatio
+    pixelRatio,
+    maxFps
   ]);
 
   return <div ref={containerRef} className={`particles-container ${className}`} />;
