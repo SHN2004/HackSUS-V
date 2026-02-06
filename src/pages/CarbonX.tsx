@@ -42,6 +42,30 @@ const carbonX = {
     "CARBONX traces its origins back to 2022, when it was first launched as VEGATHON, a national-level hardware hackathon conducted by the Department of Electronics and Communication Engineering in collaboration with CDAC. VEGATHON 2022 was centered around the VEGA Processor, an indigenous processor architecture developed by CDAC, and was designed to promote hands-on learning, processor-level understanding, and system-based innovation. Building on the success and technical legacy of VEGATHON, the initiative was later rebranded as CARBON, with CARBONX introduced as its competitive hackathon format. This evolution reflects the department’s long-term vision of creating a sustained innovation ecosystem rooted in electronics and hardware excellence.",
 } as const;
 
+const contactList = [
+  {
+    name: "Ashish John Binu",
+    email: "binu.john.ashish@gmail.com",
+    phone: "+91 81290 93676",
+    phoneLink: "+918129093676",
+    role: "Primary Coordinator",
+  },
+  {
+    name: "Pooja S Nair",
+    email: "poojanair6795@gmail.com",
+    phone: "+91 70120 49388",
+    phoneLink: "+917012049388",
+    role: "General Support",
+  },
+  {
+    name: "Kashinath P Menon",
+    email: "kashinathpm10@gmail.com",
+    phone: "+91 85901 94852",
+    phoneLink: "+918590194852",
+    role: "General Support",
+  },
+] as const;
+
 const trackLaneUi = {
   vegathon: {
     icon: Cpu,
@@ -388,7 +412,7 @@ function CarbonXNavbar({
 const CarbonX = () => {
   const location = useLocation();
   const sectionIds = useMemo(
-    () => ["about", "history", "tracks", "problems"],
+    () => ["about", "history", "tracks", "contacts"],
     [],
   );
   const activeId = useActiveSection(sectionIds);
@@ -497,16 +521,16 @@ const CarbonX = () => {
       </div>
 
       <div className="landing-content">
-        <CarbonXNavbar
-          activeId={activeId}
-          items={[
-            { id: "about", label: "ABOUT" },
-            { id: "history", label: "HISTORY" },
-            { id: "tracks", label: "TRACKS" },
-            { id: "problems", label: "PROBLEMS" },
-          ]}
-          onNavigate={scrollToSection}
-        />
+          <CarbonXNavbar
+            activeId={activeId}
+            items={[
+              { id: "about", label: "ABOUT" },
+              { id: "history", label: "HISTORY" },
+              { id: "tracks", label: "TRACKS" },
+              { id: "contacts", label: "CONTACTS" },
+            ]}
+            onNavigate={scrollToSection}
+          />
 
         {/* Hero */}
         <section className="relative pt-16 md:pt-20 pb-8 md:pb-12">
@@ -1029,47 +1053,78 @@ const CarbonX = () => {
           </div>
         </section>
 
-        {/* Problem statements */}
-        <section id="problems" className="relative py-20 md:py-28 scroll-mt-24">
+        {/* Contacts */}
+        <section id="contacts" className="relative py-20 md:py-28 scroll-mt-24">
           <div className="container max-w-[1100px] px-6">
           <SectionHeading
-            eyebrow="PROBLEM STATEMENTS"
+            eyebrow="CONTACTS"
             title={
               <>
-                The build starts with a{" "}
-                <span className="text-primary">real problem.</span>
+                Need help?{" "}
+                <span className="text-primary">Reach the core team.</span>
               </>
             }
-            description="We’ll publish the final problem statements soon — aligned to both tracks."
+            description="For registrations, logistics, and track-specific questions, connect with the leads below."
           />
 
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {contactList.map((contact, index) => (
+              <motion.div
+                key={contact.email}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px 0px -20% 0px" }}
+                transition={{ duration: 0.55, ease: "easeOut", delay: index * 0.08 }}
+              >
+                <GlassCard className="relative h-full p-6 md:p-7">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.34em] text-muted-foreground">
+                    {contact.role}
+                  </div>
+                  <div className="mt-3 font-display text-xl md:text-2xl tracking-wide">
+                    {contact.name}
+                  </div>
+                  <div className="mt-5 space-y-3 text-sm">
+                    <a
+                      href={`mailto:${contact.email}`}
+                      className="group flex items-center justify-between gap-3 rounded-xl border border-border/60 bg-background/40 px-4 py-3 transition hover:border-primary/50 hover:bg-primary/5"
+                    >
+                      <span className="text-muted-foreground">Email</span>
+                      <span className="text-foreground/90 group-hover:text-foreground">
+                        {contact.email}
+                      </span>
+                    </a>
+                    <a
+                      href={`tel:${contact.phoneLink}`}
+                      className="group flex items-center justify-between gap-3 rounded-xl border border-border/60 bg-background/40 px-4 py-3 transition hover:border-primary/50 hover:bg-primary/5"
+                    >
+                      <span className="text-muted-foreground">Phone</span>
+                      <span className="text-foreground/90 group-hover:text-foreground">
+                        {contact.phone}
+                      </span>
+                    </a>
+                  </div>
+                  <div
+                    className="truefocus-veil pointer-events-none absolute inset-0"
+                    aria-hidden="true"
+                  />
+                </GlassCard>
+              </motion.div>
+            ))}
+          </div>
+
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px 0px -20% 0px" }}
-            transition={{ duration: 0.55, ease: "easeOut" }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+            className="mt-10 flex justify-center"
           >
-            <GlassCard className="p-7 md:p-10">
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                <div className="max-w-2xl">
-                  <div className="font-display text-2xl md:text-3xl tracking-wide">
-                    Coming soon.
-                  </div>
-                  <p className="mt-3 text-sm md:text-base text-muted-foreground leading-relaxed">
-                    Once released, you’ll be able to pick a statement, map it to a track, and start
-                    prototyping immediately. Keep this page bookmarked.
-                  </p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Button
-                    onClick={() => scrollToSection("top")}
-                    className="rounded-xl px-7 h-11 font-display tracking-wider shadow-[0_10px_30px_hsl(var(--primary)/0.18)]"
-                  >
-                    BACK TO TOP <ArrowRight className="ml-1" />
-                  </Button>
-                </div>
-              </div>
-            </GlassCard>
+            <Button
+              onClick={() => scrollToSection("top")}
+              className="rounded-xl px-7 h-11 font-display tracking-wider shadow-[0_10px_30px_hsl(var(--primary)/0.18)]"
+            >
+              BACK TO TOP <ArrowRight className="ml-1" />
+            </Button>
           </motion.div>
           </div>
         </section>
