@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ArrowRight, Menu } from "lucide-react";
+import { ArrowRight, CircuitBoard, Cpu, Menu } from "lucide-react";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
@@ -41,6 +41,61 @@ const carbonX = {
     historyLong:
         "CARBONX traces its origins back to 2022, when it was first launched as VEGATHON, a national-level hardware hackathon conducted by the Department of Electronics and Communication Engineering in collaboration with CDAC. VEGATHON 2022 was centered around the VEGA Processor, an indigenous processor architecture developed by CDAC, and was designed to promote hands-on learning, processor-level understanding, and system-based innovation. Building on the success and technical legacy of VEGATHON, the initiative was later rebranded as CARBON, with CARBONX introduced as its competitive hackathon format. This evolution reflects the department's long-term vision of creating a sustained innovation ecosystem rooted in electronics and hardware excellence.",
 } as const;
+
+const contactList = [
+  {
+    name: "Ashish John Binu",
+    email: "binu.john.ashish@gmail.com",
+    phone: "+91 81290 93676",
+    phoneLink: "+918129093676",
+    role: "Primary Coordinator",
+  },
+  {
+    name: "Pooja S Nair",
+    email: "poojanair6795@gmail.com",
+    phone: "+91 70120 49388",
+    phoneLink: "+917012049388",
+    role: "General Support",
+  },
+  {
+    name: "Kashinath P Menon",
+    email: "kashinathpm10@gmail.com",
+    phone: "+91 85901 94852",
+    phoneLink: "+918590194852",
+    role: "General Support",
+  },
+] as const;
+
+const trackLaneUi = {
+  vegathon: {
+    icon: Cpu,
+    lane: "SYSTEMS",
+    patternClass:
+      "bg-[radial-gradient(circle_at_1px_1px,rgba(255,49,46,0.14)_1px,transparent_1.6px)] [background-size:20px_20px]",
+    washClass: "bg-gradient-to-br from-primary/10 via-transparent to-transparent",
+    metaPillClass: "border-primary/25 bg-background/5 text-primary/90",
+    metaIconClass: "text-primary/80",
+    detailsVariant: "outline" as const,
+    detailsClass:
+      "border-primary/30 text-primary hover:bg-primary/10 hover:text-primary hover:border-primary/45",
+    glassOverlayClass: "bg-gradient-to-br from-primary/10 via-transparent to-transparent",
+  },
+  electrothon: {
+    icon: CircuitBoard,
+    lane: "WORKFLOWS",
+    patternClass:
+      "bg-[radial-gradient(circle_at_1px_1px,rgba(255,49,46,0.16)_1px,transparent_1.35px)] [background-size:18px_18px]",
+    washClass: "bg-gradient-to-br from-primary/10 via-transparent to-transparent",
+    metaPillClass: "border-primary/25 bg-background/5 text-primary/90",
+    metaIconClass: "text-primary/80",
+    detailsVariant: "outline" as const,
+    detailsClass:
+      "border-primary/30 text-primary hover:bg-primary/10 hover:text-primary hover:border-primary/45",
+    glassOverlayClass: "bg-gradient-to-br from-primary/10 via-transparent to-transparent",
+  },
+} as const;
+
+type TrackKey = keyof typeof trackLaneUi;
 
 function useActiveSection(sectionIds: string[]) {
     const [active, setActive] = useState(sectionIds[0] ?? "");
