@@ -9,6 +9,7 @@ import DecryptedText from "@/components/DecryptedText";
 import ShinyText from "@/components/ShinyText";
 import SpotlightCard from "@/components/SpotlightCard";
 import TrueFocus from "@/components/TrueFocus";
+import LogoLoop from "@/components/LogoLoop";
 import { useParticleTuning } from "@/hooks/useParticlesQuality";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -424,6 +425,47 @@ const CarbonX = () => {
   const particleColors = useMemo(() => ["#ffffff"], []);
   const particleTuning = useParticleTuning();
   const [magnetDisabled, setMagnetDisabled] = useState(true);
+  const partnerLogos = useMemo(
+    () => [
+      {
+        node: (
+          <span className="inline-flex min-w-[280px] items-center justify-center px-4 py-1">
+            <img
+              src="/images/cdac.svg"
+              alt="CDAC"
+              className="h-[4.2rem] w-auto object-contain opacity-95 drop-shadow-[0_10px_24px_rgba(0,0,0,0.36)]"
+            />
+          </span>
+        ),
+        ariaLabel: "CDAC logo",
+      },
+      {
+        node: (
+          <span className="inline-flex min-w-[430px] items-center justify-center px-2 py-1">
+            <img
+              src="/images/enauts.svg"
+              alt="ENAUTS"
+              className="h-[7.4rem] w-auto object-contain opacity-95 scale-[1.55] drop-shadow-[0_10px_24px_rgba(0,0,0,0.36)]"
+            />
+          </span>
+        ),
+        ariaLabel: "ENAUTS logo",
+      },
+      {
+        node: (
+          <span className="inline-flex min-w-[300px] items-center justify-center px-3 py-1">
+            <img
+              src="/images/rset_jubilee.png"
+              alt="RSET Silver Jubilee"
+              className="h-[6.8rem] w-auto object-contain opacity-95 drop-shadow-[0_10px_24px_rgba(0,0,0,0.36)]"
+            />
+          </span>
+        ),
+        ariaLabel: "RSET Silver Jubilee logo",
+      },
+    ],
+    [],
+  );
   const getNavOffset = useCallback(() => {
     const header = document.querySelector(".landing-header") as HTMLElement | null;
     const headerHeight = header?.getBoundingClientRect().height ?? 0;
@@ -773,9 +815,10 @@ const CarbonX = () => {
 	                        </div>
 	                      </div>
 	                    ))}
-	                  </div>
-	                </SpotlightCard>
-	              </motion.div>
+		                  </div>
+		                </SpotlightCard>
+		              </motion.div>
+
             </motion.div>
           </div>
         </section>
@@ -1129,6 +1172,33 @@ const CarbonX = () => {
             >
               BACK TO TOP <ArrowRight className="ml-1" />
             </Button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px 0px -10% 0px" }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.05 }}
+            className="mt-8 w-full"
+          >
+            <div className="mx-auto max-w-[52rem] rounded-none card-beveled border border-border/70 bg-card/35 backdrop-blur-sm px-4 py-3 md:px-5">
+              <div className="mb-2 flex items-center gap-3">
+                <span className="font-mono text-[9px] uppercase tracking-[0.26em] text-muted-foreground sm:text-[10px]">
+                  Presented Partners
+                </span>
+                <div className="h-px flex-1 bg-border/60" />
+              </div>
+              <LogoLoop
+                logos={partnerLogos}
+                speed={52}
+                gap={8}
+                logoHeight={72}
+                pauseOnHover={true}
+                fadeOut={false}
+                ariaLabel="CDAC and ENAUTS partner logos"
+                className="w-full py-1"
+              />
+            </div>
           </motion.div>
           </div>
         </section>
