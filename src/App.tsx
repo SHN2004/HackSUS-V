@@ -35,7 +35,7 @@ const AppShell = () => {
             zIndex: -1,
             pointerEvents: "none",
             overflow: "hidden",
-            opacity: 0.08,
+            opacity: 0.14,
           }}
         >
           <Dithering
@@ -45,9 +45,9 @@ const AppShell = () => {
             colorFront="#e71818"
             shape="warp"
             type="random"
-            size={1}
-            speed={0.1}
-            scale={0.68}
+            size={0.9}
+            speed={0.24}
+            scale={0.74}
             offsetX={0.28}
             offsetY={-0.3}
           />

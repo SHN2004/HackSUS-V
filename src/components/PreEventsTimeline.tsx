@@ -35,7 +35,7 @@ const PreEventsTimeline = () => {
         },
         {
             id: 6,
-            date: "Mar 26, 2026",
+            date: "Mar 6, 2026",
             title: "HackSUS V Begins",
             description: "The 42-hour marathon starts here.",
             icon: <Calendar className="w-5 h-5 text-primary" />,
