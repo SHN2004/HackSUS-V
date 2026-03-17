@@ -497,6 +497,66 @@ const CarbonX = () => {
         ),
         ariaLabel: "RSET IEDC logo",
       },
+      {
+        node: (
+          <span className="inline-flex items-center justify-center px-2 py-1">
+            <img
+              src="/images/fragomen.png"
+              alt="Fragomen"
+              className="h-[4.2rem] w-auto object-contain opacity-95 saturate-110 contrast-105 drop-shadow-[0_10px_24px_rgba(0,0,0,0.36)] md:h-[5.6rem]"
+            />
+          </span>
+        ),
+        ariaLabel: "Fragomen logo",
+      },
+      {
+        node: (
+          <span className="inline-flex items-center justify-center px-2 py-1">
+            <img
+              src="/images/agappe.png"
+              alt="Agappe"
+              className="h-[4.2rem] w-auto object-contain opacity-95 saturate-110 contrast-105 drop-shadow-[0_10px_24px_rgba(0,0,0,0.36)] md:h-[5.5rem]"
+            />
+          </span>
+        ),
+        ariaLabel: "Agappe logo",
+      },
+      {
+        node: (
+          <span className="inline-flex items-center justify-center px-2 py-1">
+            <img
+              src="/images/trellisign.png"
+              alt="Trellisign"
+              className="h-[3.7rem] w-auto object-contain opacity-95 saturate-105 contrast-105 drop-shadow-[0_10px_24px_rgba(0,0,0,0.36)] md:h-[4.9rem]"
+            />
+          </span>
+        ),
+        ariaLabel: "Trellisign logo",
+      },
+      {
+        node: (
+          <span className="inline-flex items-center justify-center px-2 py-1">
+            <img
+              src="/images/cied-ventures.png"
+              alt="CIED Ventures"
+              className="h-[3.9rem] w-auto scale-[1.05] object-contain opacity-95 saturate-105 contrast-105 drop-shadow-[0_10px_24px_rgba(0,0,0,0.36)] md:h-[5.1rem]"
+            />
+          </span>
+        ),
+        ariaLabel: "CIED Ventures logo",
+      },
+      {
+        node: (
+          <span className="inline-flex items-center justify-center px-2 py-1">
+            <img
+              src="/images/hanoch.png"
+              alt="Hanoch"
+              className="h-[3.9rem] w-auto scale-[1.22] object-contain object-[50%_62%] opacity-95 saturate-110 contrast-105 drop-shadow-[0_10px_24px_rgba(0,0,0,0.36)] md:h-[5.1rem]"
+            />
+          </span>
+        ),
+        ariaLabel: "Hanoch logo",
+      },
     ],
     [],
   );
